@@ -87,6 +87,25 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
 
 }
 
+void MonpluginAudioProcessorEditor::childComponentClicked(juce::Component* component)
+{
+    // Désélectionner l'ancien composant
+    if (selectedComponent != nullptr)
+    {
+        if (auto* addComp = dynamic_cast<AdditionComponent*>(selectedComponent))
+            addComp->setSelected(false);
+        else if (auto* constComp = dynamic_cast<ConstanteComponent*>(selectedComponent))
+            constComp->setSelected(false);
+    }
+
+    // Sélectionner le nouveau composant
+    selectedComponent = component;
+    if (auto* addComp = dynamic_cast<AdditionComponent*>(component))
+        addComp->setSelected(true);
+    else if (auto* constComp = dynamic_cast<ConstanteComponent*>(component))
+        constComp->setSelected(true);
+}
+
 
 void MonpluginAudioProcessorEditor::removeAdditionComponent(AdditionComponent* comp)
 {

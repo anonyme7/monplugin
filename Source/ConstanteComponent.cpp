@@ -100,3 +100,9 @@ void ConstanteComponent::mouseDown(const juce::MouseEvent& event)
             });
     }
 }
+
+void ConstanteComponent::setSelected(bool selected)
+{
+    isSelected = selected;
+    repaint(); // Redessiner pour mettre à jour la bordure
+}

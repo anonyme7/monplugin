@@ -16,8 +16,10 @@
           file="Source/AdditionComponent.cpp"/>
     <FILE id="pLU0m2" name="AdditionComponent.h" compile="0" resource="0"
           file="Source/AdditionComponent.h"/>
-    <FILE id="IHadRT" name="Constante.cpp" compile="1" resource="0" file="Source/Constante.cpp"/>
-    <FILE id="OTEGR8" name="Constante.h" compile="0" resource="0" file="Source/Constante.h"/>
+    <FILE id="IHadRT" name="ConstanteComponent.cpp" compile="1" resource="0"
+          file="Source/ConstanteComponent.cpp"/>
+    <FILE id="OTEGR8" name="ConstanteComponent.h" compile="0" resource="0"
+          file="Source/ConstanteComponent.h"/>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

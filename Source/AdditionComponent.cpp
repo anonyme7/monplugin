@@ -94,3 +94,9 @@ void AdditionComponent::mouseDown(const juce::MouseEvent& event)
             });
     }
 }
+
+void AdditionComponent::setSelected(bool selected)
+{
+    isSelected = selected;
+    repaint(); // Redessiner pour mettre à jour la bordure
+}

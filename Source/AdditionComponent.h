@@ -26,9 +26,13 @@ public:
 
     void mouseDown(const juce::MouseEvent& event) override;
 
+    void setSelected(bool selected);
+
 private:
 
     bool isSelected = false;
+
+
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdditionComponent)
