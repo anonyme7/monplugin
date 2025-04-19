@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "AdditionComponent.h"
+#include "ConstanteComponent.h"
 
 //==============================================================================
 /**
@@ -27,6 +28,7 @@ public:
 
     void mouseDown(const juce::MouseEvent& event) override;
     void removeAdditionComponent(AdditionComponent* comp);
+    void removeConstanteComponent(ConstanteComponent* comp);
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -34,6 +36,7 @@ private:
     MonpluginAudioProcessor& audioProcessor;
 
     juce::OwnedArray<AdditionComponent> additionComponents;
+    juce::OwnedArray<ConstanteComponent> constanteComponents;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MonpluginAudioProcessorEditor)
 };

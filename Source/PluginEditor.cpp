@@ -9,10 +9,10 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "AdditionComponent.h"
+#include "ConstanteComponent.h"
 
 //==============================================================================
-MonpluginAudioProcessorEditor::MonpluginAudioProcessorEditor (MonpluginAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+MonpluginAudioProcessorEditor::MonpluginAudioProcessorEditor (MonpluginAudioProcessor& p): AudioProcessorEditor (&p), audioProcessor (p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -71,8 +71,11 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
                 }
                 if (result == 2)
                 {
-                    juce::Logger::writeToLog("Option 2 sélectionnée");
-                    // Ajoutez votre logique ici
+                    ConstanteComponent* constanteComp = new ConstanteComponent();
+                    constanteComp->setSize(50, 50);
+                    constanteComp->setTopLeftPosition(event.getPosition().x, event.getPosition().y);
+                    constanteComponents.add(constanteComp);
+                    addAndMakeVisible(constanteComp);
                 }
                 if (result == 3)
                 {
@@ -87,4 +90,9 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
 void MonpluginAudioProcessorEditor::removeAdditionComponent(AdditionComponent* comp)
 {
     additionComponents.removeObject(comp); // Supprime et détruit le composant
+}
+
+void MonpluginAudioProcessorEditor::removeConstanteComponent(ConstanteComponent* comp)
+{
+    constanteComponents.removeObject(comp); // Supprime et détruit le composant
 }
