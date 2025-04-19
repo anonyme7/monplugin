@@ -48,6 +48,8 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
         // Créer un menu contextuel
         juce::PopupMenu menu;
 
+        selectComponent(nullptr);
+
         // Ajouter des options au menu
         menu.addItem(1, "addition");
         menu.addItem(2, "Option 2");
@@ -66,7 +68,7 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
                     additionComp->setSize(50, 50);
                     // Positionne le composant à l'endroit du clic
                     additionComp->setTopLeftPosition(event.getPosition().x, event.getPosition().y);
-                    additionComponents.add(additionComp);
+                    components.add(additionComp);
                     addAndMakeVisible(additionComp);
                 }
                 if (result == 2)
@@ -74,7 +76,7 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
                     ConstanteComponent* constanteComp = new ConstanteComponent();
                     constanteComp->setSize(50, 50);
                     constanteComp->setTopLeftPosition(event.getPosition().x, event.getPosition().y);
-                    constanteComponents.add(constanteComp);
+                    components.add(constanteComp);
                     addAndMakeVisible(constanteComp);
                 }
                 if (result == 3)
@@ -87,32 +89,5 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
 
 }
 
-void MonpluginAudioProcessorEditor::childComponentClicked(juce::Component* component)
-{
-    // Désélectionner l'ancien composant
-    if (selectedComponent != nullptr)
-    {
-        if (auto* addComp = dynamic_cast<AdditionComponent*>(selectedComponent))
-            addComp->setSelected(false);
-        else if (auto* constComp = dynamic_cast<ConstanteComponent*>(selectedComponent))
-            constComp->setSelected(false);
-    }
-
-    // Sélectionner le nouveau composant
-    selectedComponent = component;
-    if (auto* addComp = dynamic_cast<AdditionComponent*>(component))
-        addComp->setSelected(true);
-    else if (auto* constComp = dynamic_cast<ConstanteComponent*>(component))
-        constComp->setSelected(true);
-}
 
 
-void MonpluginAudioProcessorEditor::removeAdditionComponent(AdditionComponent* comp)
-{
-    additionComponents.removeObject(comp); // Supprime et détruit le composant
-}
-
-void MonpluginAudioProcessorEditor::removeConstanteComponent(ConstanteComponent* comp)
-{
-    constanteComponents.removeObject(comp); // Supprime et détruit le composant
-}

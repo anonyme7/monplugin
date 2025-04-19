@@ -11,11 +11,12 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "ComponentPerso.h"
 
 //==============================================================================
 /*
 */
-class ConstanteComponent  : public juce::Component
+class ConstanteComponent  : public ComponentPerso
 {
 public:
     ConstanteComponent();
@@ -23,7 +24,6 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
-    void mouseDown(const juce::MouseEvent& event) override;
     void ConstanteComponent::setSelected(bool selected);
 
 private:

@@ -11,11 +11,12 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "ComponentPerso.h"
 
 //==============================================================================
 /*
 */
-class AdditionComponent  : public juce::Component
+class AdditionComponent  : public ComponentPerso
 {
 public:
     AdditionComponent();
@@ -23,8 +24,6 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
-
-    void mouseDown(const juce::MouseEvent& event) override;
 
     void setSelected(bool selected);
 

@@ -30,17 +30,32 @@ public:
     void removeAdditionComponent(AdditionComponent* comp);
     void removeConstanteComponent(ConstanteComponent* comp);
 
-    void childComponentClicked(juce::Component* component);
+    void selectComponent(juce::Component* component)
+    {
+        // Désélectionner l'ancien composant
+        if (selectedComponent != nullptr)
+        {
+            if (auto* comp = dynamic_cast<ComponentPerso*>(selectedComponent))
+                comp->setSelected(false);
+        }
+
+        // Sélectionner le nouveau composant
+        selectedComponent = component;
+        if (component != nullptr)
+        {
+            if (auto* comp = dynamic_cast<ComponentPerso*>(component))
+                comp->setSelected(true);
+        }
+    }
 
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     MonpluginAudioProcessor& audioProcessor;
 
-    juce::OwnedArray<AdditionComponent> additionComponents;
-    juce::OwnedArray<ConstanteComponent> constanteComponents;
-
+    juce::OwnedArray<ComponentPerso> components; // Liste unifiée pour tous les composants
     juce::Component* selectedComponent = nullptr;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MonpluginAudioProcessorEditor)
 };
