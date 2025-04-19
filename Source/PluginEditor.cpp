@@ -87,6 +87,7 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
 
 }
 
+
 void MonpluginAudioProcessorEditor::removeAdditionComponent(AdditionComponent* comp)
 {
     additionComponents.removeObject(comp); // Supprime et détruit le composant

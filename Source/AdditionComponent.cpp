@@ -28,6 +28,12 @@ void AdditionComponent::paint(juce::Graphics& g)
     g.fillAll(juce::Colours::blue); // Exemple : fond bleu pour visualiser
     g.setColour(juce::Colours::white);
     g.drawRect(getLocalBounds(), 1.0f); // Bordure blanche
+
+    if (isSelected)
+    {
+        g.setColour(juce::Colours::red);
+        g.drawRect(getLocalBounds(), 2.0f); // Bordure rouge, épaisseur 2 pixels
+    }
 }
 
 void AdditionComponent::resized()

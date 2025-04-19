@@ -16,6 +16,7 @@
 ConstanteComponent::ConstanteComponent()
 {
     setSize(50, 50);
+    borderColour = juce::Colours::green;
 
 }
 
@@ -29,6 +30,12 @@ void ConstanteComponent::paint (juce::Graphics& g)
     g.fillAll(juce::Colours::green);
     g.setColour(juce::Colours::white);
     g.drawText("Const", getLocalBounds(), juce::Justification::centred);
+
+    if (isSelected)
+    {
+        g.setColour(juce::Colours::red);
+        g.drawRect(getLocalBounds(), 2.0f); // Bordure rouge, épaisseur 2 pixels
+    }
 }
 
 void ConstanteComponent::resized()
@@ -40,6 +47,10 @@ void ConstanteComponent::resized()
 
 void ConstanteComponent::mouseDown(const juce::MouseEvent& event)
 {
+
+    borderColour = juce::Colours::red;
+    repaint();
+
     if (event.mods.isRightButtonDown())
     {
         juce::PopupMenu menu;
