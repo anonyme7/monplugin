@@ -22,6 +22,21 @@ MonpluginAudioProcessor::MonpluginAudioProcessor()
                        )
 #endif
 {
+
+
+    // Create parameter layout
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+
+    // Add your parameters (example with gain)
+    layout.add(std::make_unique<juce::AudioParameterFloat>("gain", "Gain", juce::NormalisableRange<float>(0.0f, 1.0f), 0.5f));
+
+    // Initialize APVTS
+    apvts = std::make_unique<juce::AudioProcessorValueTreeState>(*this, nullptr, "Parameters", std::move(layout));
+
+    // Initialize state
+    state = juce::ValueTree("PluginState");
+
+
 }
 
 MonpluginAudioProcessor::~MonpluginAudioProcessor()
@@ -152,6 +167,9 @@ void MonpluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     // interleaved by keeping the same state.
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
+
+        auto gain = apvts->getRawParameterValue("gain")->load();
+
         auto* channelData = buffer.getWritePointer (channel);
 
         // ..do something to the data...
@@ -175,12 +193,20 @@ void MonpluginAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
+
+    auto stateCopy = state.createCopy();
+    std::unique_ptr<juce::XmlElement> xml(stateCopy.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void MonpluginAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+
+    std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+    if (xmlState.get() != nullptr)
+        state = juce::ValueTree::fromXml(*xmlState);
 }
 
 //==============================================================================
@@ -189,3 +215,5 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new MonpluginAudioProcessor();
 }
+
+juce::AudioProcessorValueTreeState& MonpluginAudioProcessor::getAPVTS() { return *apvts; }

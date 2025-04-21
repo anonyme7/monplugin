@@ -24,6 +24,10 @@
           file="Source/ConstanteComponent.cpp"/>
     <FILE id="OTEGR8" name="ConstanteComponent.h" compile="0" resource="0"
           file="Source/ConstanteComponent.h"/>
+    <FILE id="XDNHIs" name="SliderComponent.cpp" compile="1" resource="0"
+          file="Source/SliderComponent.cpp"/>
+    <FILE id="u2I4ir" name="SliderComponent.h" compile="0" resource="0"
+          file="Source/SliderComponent.h"/>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

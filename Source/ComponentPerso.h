@@ -25,11 +25,7 @@ public:
     void resized() override;
 
     void mouseDown(const juce::MouseEvent& event) override;
-  
-
     void setSelected(bool selected);
-    
-
     bool isComponentSelected() const; 
 
 protected:

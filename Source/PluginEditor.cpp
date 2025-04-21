@@ -10,13 +10,29 @@
 #include "PluginEditor.h"
 #include "AdditionComponent.h"
 #include "ConstanteComponent.h"
+#include "SliderComponent.h"
 
 //==============================================================================
-MonpluginAudioProcessorEditor::MonpluginAudioProcessorEditor (MonpluginAudioProcessor& p): AudioProcessorEditor (&p), audioProcessor (p)
+MonpluginAudioProcessorEditor::MonpluginAudioProcessorEditor (MonpluginAudioProcessor& p): AudioProcessorEditor (&p), audioProcessor (p), apvts(p.getAPVTS())
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (800, 800);
+
+   
+   
+
+    // Create sliders and attachments
+    //gainSlider = std::make_unique<juce::Slider>();
+
+    gainSlider.setRange(0.0, 1.0, 0.01); // Plage et pas
+    gainSlider.setSliderStyle(juce::Slider::LinearHorizontal); // Style
+    gainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 80, 20); //
+
+    addAndMakeVisible(gainSlider);
+    gainAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "gain", gainSlider);
+
+
 }
 
 MonpluginAudioProcessorEditor::~MonpluginAudioProcessorEditor()
@@ -38,6 +54,10 @@ void MonpluginAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+
+    //gainSlider->setBounds(getLocalBounds().reduced(20));
+
+    gainSlider.setBounds(getWidth() / 2 - 100, getHeight() / 2 - 100, 200, 200);
 }
 
 void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
@@ -52,7 +72,7 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
 
         // Ajouter des options au menu
         menu.addItem(1, "addition");
-        menu.addItem(2, "Option 2");
+        menu.addItem(2, "Slider");
         menu.addSeparator(); // Ajoute une ligne de séparation
         menu.addItem(3, "Option 3");
 
@@ -73,11 +93,11 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
                 }
                 if (result == 2)
                 {
-                    ConstanteComponent* constanteComp = new ConstanteComponent();
-                    constanteComp->setSize(50, 50);
-                    constanteComp->setTopLeftPosition(event.getPosition().x, event.getPosition().y);
-                    components.add(constanteComp);
-                    addAndMakeVisible(constanteComp);
+                    SliderComponent* SliderComp = new SliderComponent();
+                    SliderComp->setSize(50, 50);
+                    SliderComp->setTopLeftPosition(event.getPosition().x, event.getPosition().y);
+                    components.add(SliderComp);
+                    addAndMakeVisible(SliderComp);
                 }
                 if (result == 3)
                 {
@@ -88,6 +108,25 @@ void  MonpluginAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
     }
 
 }
+
+void MonpluginAudioProcessorEditor::selectComponent(juce::Component* component)
+{
+    // Désélectionner l'ancien composant
+    if (selectedComponent != nullptr)
+    {
+        if (auto* comp = dynamic_cast<ComponentPerso*>(selectedComponent))
+            comp->setSelected(false);
+    }
+
+    // Sélectionner le nouveau composant
+    selectedComponent = component;
+    if (component != nullptr)
+    {
+        if (auto* comp = dynamic_cast<ComponentPerso*>(component))
+            comp->setSelected(true);
+    }
+}
+
 
 
 
